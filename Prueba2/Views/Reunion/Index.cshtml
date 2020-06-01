@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Prueba2.Reunion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Reuniones</h2>
+
+<p>
+    @Html.ActionLink("Crear reunión", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Fecha
+        </th>
+        <th>
+           Hora
+        </th>
+        <th>
+            Dirección
+        </th>
+        <th>
+           Nombre empleado
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hora)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Empleado.nombre)
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id = item.id_reunion }, new { @class = "btn btn-info glyphicon glyphicon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id = item.id_reunion }, new { @class = "btn btn-success glyphicon glyphicon-info-sign" }) |
+            @Html.ActionLink(" ", "Delete", new { id = item.id_reunion }, new { @class = "btn btn-danger glyphicon glyphicon-remove" })
+
+        </td>
+    </tr>
+}
+
+</table>

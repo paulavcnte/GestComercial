@@ -1,0 +1,50 @@
+﻿@model Prueba2.Gasto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Gasto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Tipo de gasto
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipo_gasto)
+        </dd>
+
+        <dt>
+           Importe
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.importe)
+        </dd>
+
+        <dt>
+           Factura
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.factura)
+        </dd>
+
+        <dt>
+            Nombre empleado
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empleado.nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.id_gasto }) |
+    @Html.ActionLink("Cancelar", "Index")
+</p>

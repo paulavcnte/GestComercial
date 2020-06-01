@@ -1,0 +1,56 @@
+﻿@model Prueba2.Gasto
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Borrar</h2>
+
+<h3>¿Desea borrar este gasto?</h3>
+<div>
+    <h4>Gasto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Tipo de gasto
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipo_gasto)
+        </dd>
+
+        <dt>
+            Importe
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.importe)
+        </dd>
+
+        <dt>
+            Factura
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.factura)
+        </dd>
+
+        <dt>
+           Nombre de empleado
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empleado.nombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-default" /> |
+            @Html.ActionLink("Cancelar", "Index")
+        </div>
+    }
+</div>

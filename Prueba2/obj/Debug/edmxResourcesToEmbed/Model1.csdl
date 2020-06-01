@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="pruebaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="pruebaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Empleado" EntityType="pruebaModel.Empleado" />
+    <EntitySet Name="Gasto" EntityType="pruebaModel.Gasto" />
+    <AssociationSet Name="FK_Gasto_Empleado" Association="pruebaModel.FK_Gasto_Empleado">
+      <End Role="Empleado" EntitySet="Empleado" />
+      <End Role="Gasto" EntitySet="Gasto" />
+    </AssociationSet>
+    <EntitySet Name="Reunion" EntityType="pruebaModel.Reunion" />
+    <AssociationSet Name="FK_Reunion_Empleado" Association="pruebaModel.FK_Reunion_Empleado">
+      <End Role="Empleado" EntitySet="Empleado" />
+      <End Role="Reunion" EntitySet="Reunion" />
+    </AssociationSet>
+    <EntitySet Name="Cliente" EntityType="pruebaModel.Cliente" />
+    <AssociationSet Name="FK_Cliente_Empleado" Association="pruebaModel.FK_Cliente_Empleado">
+      <End Role="Empleado" EntitySet="Empleado" />
+      <End Role="Cliente" EntitySet="Cliente" />
+    </AssociationSet>
+    <EntitySet Name="Evento" EntityType="pruebaModel.Evento" />
+    <AssociationSet Name="FK_Evento_Cliente" Association="pruebaModel.FK_Evento_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Evento" EntitySet="Evento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Evento_Empleado" Association="pruebaModel.FK_Evento_Empleado">
+      <End Role="Empleado" EntitySet="Empleado" />
+      <End Role="Evento" EntitySet="Evento" />
+    </AssociationSet>
+    <EntitySet Name="Cita" EntityType="pruebaModel.Cita" />
+    <AssociationSet Name="FK_Cita_Cliente" Association="pruebaModel.FK_Cita_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cita_Empleado" Association="pruebaModel.FK_Cita_Empleado">
+      <End Role="Empleado" EntitySet="Empleado" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <EntitySet Name="Categoria" EntityType="pruebaModel.Categoria" />
+    <AssociationSet Name="FK_Empleado_Categoria" Association="pruebaModel.FK_Empleado_Categoria">
+      <End Role="Categoria" EntitySet="Categoria" />
+      <End Role="Empleado" EntitySet="Empleado" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Empleado">
+    <Key>
+      <PropertyRef Name="id_empleado" />
+    </Key>
+    <Property Name="id_empleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Gasto" Relationship="pruebaModel.FK_Gasto_Empleado" FromRole="Empleado" ToRole="Gasto" />
+    <NavigationProperty Name="Reunion" Relationship="pruebaModel.FK_Reunion_Empleado" FromRole="Empleado" ToRole="Reunion" />
+    <NavigationProperty Name="Cliente" Relationship="pruebaModel.FK_Cliente_Empleado" FromRole="Empleado" ToRole="Cliente" />
+    <NavigationProperty Name="Evento" Relationship="pruebaModel.FK_Evento_Empleado" FromRole="Empleado" ToRole="Evento" />
+    <NavigationProperty Name="Cita" Relationship="pruebaModel.FK_Cita_Empleado" FromRole="Empleado" ToRole="Cita" />
+    <Property Name="id_categoria" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Categoria" Relationship="pruebaModel.FK_Empleado_Categoria" FromRole="Empleado" ToRole="Categoria" />
+  </EntityType>
+  <EntityType Name="Gasto">
+    <Key>
+      <PropertyRef Name="id_gasto" />
+    </Key>
+    <Property Name="id_gasto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tipo_gasto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="importe" Type="Double" Nullable="false" />
+    <Property Name="id_empleado" Type="Int32" Nullable="false" />
+    <Property Name="factura" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Empleado" Relationship="pruebaModel.FK_Gasto_Empleado" FromRole="Gasto" ToRole="Empleado" />
+  </EntityType>
+  <Association Name="FK_Gasto_Empleado">
+    <End Type="pruebaModel.Empleado" Role="Empleado" Multiplicity="1" />
+    <End Type="pruebaModel.Gasto" Role="Gasto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleado">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="Gasto">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Reunion">
+    <Key>
+      <PropertyRef Name="id_reunion" />
+    </Key>
+    <Property Name="id_reunion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="hora" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_empleado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Empleado" Relationship="pruebaModel.FK_Reunion_Empleado" FromRole="Reunion" ToRole="Empleado" />
+  </EntityType>
+  <Association Name="FK_Reunion_Empleado">
+    <End Type="pruebaModel.Empleado" Role="Empleado" Multiplicity="1" />
+    <End Type="pruebaModel.Reunion" Role="Reunion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleado">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="Reunion">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="id_cliente" />
+    </Key>
+    <Property Name="id_cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="apellidos" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_empleado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Empleado" Relationship="pruebaModel.FK_Cliente_Empleado" FromRole="Cliente" ToRole="Empleado" />
+    <NavigationProperty Name="Evento" Relationship="pruebaModel.FK_Evento_Cliente" FromRole="Cliente" ToRole="Evento" />
+    <NavigationProperty Name="Cita" Relationship="pruebaModel.FK_Cita_Cliente" FromRole="Cliente" ToRole="Cita" />
+  </EntityType>
+  <Association Name="FK_Cliente_Empleado">
+    <End Type="pruebaModel.Empleado" Role="Empleado" Multiplicity="1" />
+    <End Type="pruebaModel.Cliente" Role="Cliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleado">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="Cliente">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Evento">
+    <Key>
+      <PropertyRef Name="id_evento" />
+    </Key>
+    <Property Name="id_evento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre_evento" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="hora" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="id_cliente" Type="Int32" Nullable="false" />
+    <Property Name="id_empleado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cliente" Relationship="pruebaModel.FK_Evento_Cliente" FromRole="Evento" ToRole="Cliente" />
+    <NavigationProperty Name="Empleado" Relationship="pruebaModel.FK_Evento_Empleado" FromRole="Evento" ToRole="Empleado" />
+  </EntityType>
+  <Association Name="FK_Evento_Cliente">
+    <End Type="pruebaModel.Cliente" Role="Cliente" Multiplicity="1" />
+    <End Type="pruebaModel.Evento" Role="Evento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="Evento">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Evento_Empleado">
+    <End Type="pruebaModel.Empleado" Role="Empleado" Multiplicity="1" />
+    <End Type="pruebaModel.Evento" Role="Evento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleado">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="Evento">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Cita">
+    <Key>
+      <PropertyRef Name="id_cita" />
+    </Key>
+    <Property Name="id_cita" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="hora" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="obsevaciones" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="id_cliente" Type="Int32" Nullable="false" />
+    <Property Name="id_empleado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cliente" Relationship="pruebaModel.FK_Cita_Cliente" FromRole="Cita" ToRole="Cliente" />
+    <NavigationProperty Name="Empleado" Relationship="pruebaModel.FK_Cita_Empleado" FromRole="Cita" ToRole="Empleado" />
+  </EntityType>
+  <Association Name="FK_Cita_Cliente">
+    <End Type="pruebaModel.Cliente" Role="Cliente" Multiplicity="1" />
+    <End Type="pruebaModel.Cita" Role="Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cita_Empleado">
+    <End Type="pruebaModel.Empleado" Role="Empleado" Multiplicity="1" />
+    <End Type="pruebaModel.Cita" Role="Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleado">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Categoria">
+    <Key>
+      <PropertyRef Name="id_categoria" />
+    </Key>
+    <Property Name="id_categoria" Type="Int32" Nullable="false" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Empleado" Relationship="pruebaModel.FK_Empleado_Categoria" FromRole="Categoria" ToRole="Empleado" />
+  </EntityType>
+  <Association Name="FK_Empleado_Categoria">
+    <End Type="pruebaModel.Categoria" Role="Categoria" Multiplicity="1" />
+    <End Type="pruebaModel.Empleado" Role="Empleado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="id_categoria" />
+      </Principal>
+      <Dependent Role="Empleado">
+        <PropertyRef Name="id_categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
